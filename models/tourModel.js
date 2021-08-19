@@ -143,13 +143,13 @@ tourSchema.pre('save', function (next) {
 // });
 
 // tourSchema.pre('save', function (next) {
-//   console.log('wLil saved document');
+//
 //   next();
 // });
 
 // // eslint-disable-next-line prefer-arrow-callback
 // tourSchema.post('save', function (doc, next) {
-//   console.log(doc);
+//
 //   next();
 // });
 
@@ -169,12 +169,6 @@ tourSchema.pre(/^find/, function (next) {
 
   next();
 });
-
-// eslint-disable-next-line prefer-arrow-callback
-// tourSchema.post(/^find/, function (doc, next) {
-//   console.log(`query took ${Date.now() - this.start} ms`);
-//   next();
-// });
 
 // tourSchema.pre('aggregate', function (next) {
 //   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });

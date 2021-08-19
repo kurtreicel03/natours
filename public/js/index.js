@@ -34,7 +34,6 @@ if (signupForm) {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('passwordConfirm').value;
-    console.log(name, email, password, passwordConfirm);
 
     await signup(name, email, password, passwordConfirm);
 
@@ -58,7 +57,7 @@ if (bookTourBtn) {
 if (accountForm) {
   accountForm.addEventListener('submit', e => {
     e.preventDefault();
-    console.log('asdasd');
+
     const name = document.querySelector('#name').value;
     const email = document.querySelector('#email').value;
     const photo = document.getElementById('photo').files[0];
@@ -66,7 +65,6 @@ if (accountForm) {
     form.append('name', name);
     form.append('email', email);
     form.append('photo', photo);
-    console.log(form);
 
     updateAccount(form, 'data');
   });

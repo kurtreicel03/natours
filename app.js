@@ -18,6 +18,8 @@ const hpp = require('hpp');
 
 const cookieParser = require('cookie-parser');
 
+const compression = require('compression');
+
 // GLOBAL MIDDLEWARE
 
 // SERVING STATIC FILES
@@ -68,6 +70,8 @@ app.use(
     ],
   })
 );
+
+app.use(compression());
 
 const errorController = require('./controllers/errorController');
 
