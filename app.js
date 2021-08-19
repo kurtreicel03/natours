@@ -39,6 +39,7 @@ const limiter = rateLimit({
   message: 'Too many request from this Ip please, try again later',
 });
 
+// LIMITER
 app.use('/api', limiter);
 
 // BODY PARSER
