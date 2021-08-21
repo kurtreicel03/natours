@@ -22,6 +22,8 @@ const compression = require('compression');
 
 // GLOBAL MIDDLEWARE
 
+app.enable('trust proxy');
+
 // SERVING STATIC FILES
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));

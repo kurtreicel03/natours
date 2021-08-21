@@ -11,7 +11,7 @@ const signToken = id =>
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, res, req) => {
   const token = signToken(user._id);
 
   // Cookies Option
@@ -20,6 +20,7 @@ const createSendToken = (user, statusCode, res) => {
       Date.now + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
+    secure: req.secure || req.header['x-forwarded-proto'] === 'https',
   };
 
   if (process.env.NODE_ENV === 'production') cookieOption.secure = true;
@@ -93,7 +94,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Invalid Password', 401));
   }
 
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, res, req);
 });
 
 exports.isLoggedIn = async (req, res, next) => {
@@ -266,7 +267,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // 3) Update changePasswordAt property for user
 
   //4) Log the user in, send JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, res, req);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -285,7 +286,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // 4) Log user in, Send JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, res, req);
   // const token = signToken(user._id);
 
   // res.status(200).json({
