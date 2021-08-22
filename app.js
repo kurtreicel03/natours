@@ -20,9 +20,23 @@ const cookieParser = require('cookie-parser');
 
 const compression = require('compression');
 
+const cors = require('cors');
+
 // GLOBAL MIDDLEWARE
 
 app.enable('trust proxy');
+
+// IMPLEMENT CORS
+app.use(cors());
+//Access-Control-Allow-Origin *
+//
+// app.use(
+//   cors({
+//     origin: `https://www.natours.com`,
+//   })
+// );
+
+app.options('*', cors());
 
 // SERVING STATIC FILES
 app.set('view engine', 'pug');
