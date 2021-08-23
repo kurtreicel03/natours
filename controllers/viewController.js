@@ -28,6 +28,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
   const bookings = await Booking.find({ tour: tour._id });
 
   let booked;
+
   if (id) {
     booked = bookings.find(el => el.user.id.toString() === id.toString());
   }
