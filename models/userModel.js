@@ -61,6 +61,8 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    verificationToken: String,
+    verificationExpires: Date,
   },
   {
     toJSON: { virtuals: true },

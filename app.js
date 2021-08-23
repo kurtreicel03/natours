@@ -22,6 +22,8 @@ const compression = require('compression');
 
 const cors = require('cors');
 
+const bookingContoller = require('./controllers/bookingsController');
+
 // GLOBAL MIDDLEWARE
 
 app.enable('trust proxy');
@@ -56,6 +58,12 @@ const limiter = rateLimit({
   max: 100,
   message: 'Too many request from this Ip please, try again later',
 });
+
+app.post(
+  '/webhook',
+  express.raw({ type: 'application/json' }),
+  bookingContoller.webhookCheckout
+);
 
 // LIMITER
 app.use('/api', limiter);

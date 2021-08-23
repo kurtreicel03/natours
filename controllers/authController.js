@@ -40,35 +40,50 @@ const createSendToken = (user, statusCode, res, req) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const newUser = await User.create({
+  const token = crypto.randomBytes(32).toString('hex');
+
+  const hashToken = crypto.createHash('sha256').update(token).digest('hex');
+
+  const user = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     passwordChangeAt: req.body.passwordChangeAt,
     role: req.body.role,
+    verificationToken: hashToken,
+    verificationExpires: Date.now() + 10 * 60 * 1000,
   });
 
-  const url = `${req.protocol}://${req.get('host')}/verify/${newUser.id}`;
+  const url = `${req.protocol}://${req.get('host')}/verify/${token}`;
 
-  await new Email(newUser, url).sendWelcome();
+  await new Email(user, url).sendWelcome();
 
   res.status(201).json({
     status: 'success',
-    data: {
-      newUser,
-    },
+    user,
   });
 });
 
 exports.verifyUser = catchAsync(async (req, res, next) => {
-  await User.findByIdAndUpdate(
-    req.params.userId,
-    {
-      verified: true,
-    },
-    { new: true, runValidators: true }
-  );
+  const hashToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  const user = await User.findOne({
+    verificationToken: hashToken,
+    verificationExpires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new AppError('Your verification token is expired', 401));
+  }
+  user.verified = true;
+  user.verificationExpires = undefined;
+  user.verificationExpires = undefined;
+
+  await user.save({ validateBeforeSave: false });
 
   res.status(200).redirect('/login');
 });

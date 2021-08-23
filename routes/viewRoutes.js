@@ -6,16 +6,11 @@ const viewController = require('../controllers/viewController');
 const authController = require('../controllers/authController');
 const bookingController = require('../controllers/bookingsController');
 
-router.get('/verify/:userId', authController.verifyUser);
+router.get('/verify/:token', authController.verifyUser);
 
 router.get('/me', authController.protect, viewController.getAccount);
 
-router.get(
-  '/',
-  bookingController.createTourBooking,
-  authController.isLoggedIn,
-  viewController.getOverview
-);
+router.get('/', authController.isLoggedIn, viewController.getOverview);
 
 router.get('/tour/:slug', authController.isLoggedIn, viewController.getTour);
 
