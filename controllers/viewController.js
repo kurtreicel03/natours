@@ -17,7 +17,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
 exports.getTour = catchAsync(async (req, res, next) => {
   const { slug } = req.params;
 
-  const id = res.locals.user ? res.locals.users.id : '';
+  const id = res.locals.user ? res.locals.user.id : '';
 
   const tour = await Tour.findOne({ slug }).populate({ path: 'reviews' });
 
