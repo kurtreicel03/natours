@@ -80,7 +80,7 @@ exports.verifyUser = catchAsync(async (req, res, next) => {
     return next(new AppError('Your verification token is expired', 401));
   }
   user.verified = true;
-  user.verificationExpires = undefined;
+  user.verificationToken = undefined;
   user.verificationExpires = undefined;
 
   await user.save({ validateBeforeSave: false });
