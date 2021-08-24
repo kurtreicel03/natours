@@ -16,6 +16,8 @@ module.exports = class Email {
       // Send in Blue
       nodemailer.createTransport({
         service: 'SendinBlue',
+        host: process.env.SENDIN_BLUE_HOST,
+        port: process.env.SENDIN_BLUE_PORT,
         auth: {
           user: process.env.SENDIN_BLUE_USERNAME,
           pass: process.env.SENDIN_BLUE_PASSWORD,
