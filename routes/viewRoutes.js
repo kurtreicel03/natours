@@ -6,6 +6,8 @@ const viewController = require('../controllers/viewController');
 const authController = require('../controllers/authController');
 const bookingController = require('../controllers/bookingsController');
 
+router.use(viewController.alert);
+
 router.get('/verify/:token', authController.verifyUser);
 
 router.get('/me', authController.protect, viewController.getAccount);

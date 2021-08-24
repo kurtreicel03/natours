@@ -86,3 +86,14 @@ exports.updateAccount = catchAsync(async (req, res, next) => {
 exports.verifyMyAcc = (req, res) => {
   res.status(200).render('hi');
 };
+
+exports.alert = (req, res, next) => {
+  const { alert } = req.query;
+
+  if (alert) {
+    res.locals.alert =
+      'Your Booking  was successful! Please check your email for more info about your bookings';
+  }
+
+  next();
+};

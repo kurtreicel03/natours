@@ -5,6 +5,7 @@ import { login, logout, signup } from './login';
 import { updateAccount } from './accounts';
 import { bookTour } from './booking';
 import { getTour } from './get-tour';
+import { showAlert } from './alert';
 
 const loginForm = document.querySelector('.login--form');
 const mapBox = document.getElementById('map');
@@ -14,6 +15,11 @@ const passwordForm = document.querySelector('.form-user-password');
 const bookTourBtn = document.getElementById('book--tour');
 const signupForm = document.querySelector('.sign-up-form');
 const searchBar = document.querySelector('.nav__search');
+const alertMsg = document.querySelector('body').dataset.alert;
+
+if (alertMsg) {
+  showAlert('success', alertMsg);
+}
 
 if (searchBar) {
   searchBar.addEventListener('keyup', async e => {
