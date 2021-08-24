@@ -14,7 +14,7 @@ module.exports = class Email {
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
       // Send in Blue
-      nodemailer.createTransport({
+      return nodemailer.createTransport({
         service: 'SendinBlue',
         host: process.env.SENDIN_BLUE_HOST,
         port: process.env.SENDIN_BLUE_PORT,
