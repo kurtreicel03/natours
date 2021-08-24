@@ -14,7 +14,7 @@ module.exports = class Email {
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
       // Send in Blue
-      return nodemailer.createTransport({
+      nodemailer.createTransport({
         service: 'SendinBlue',
         auth: {
           user: process.env.SENDIN_BLUE_USERNAME,
@@ -40,7 +40,6 @@ module.exports = class Email {
       firstName: this.firstName,
       url: this.url,
       subject,
-      verified: this.verified,
     });
 
     //  2) Define Email Options
